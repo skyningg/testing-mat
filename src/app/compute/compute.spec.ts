@@ -10,4 +10,9 @@ describe('compute test suite', () => {
         const result = compute(1); // Use '=' to assign the value
         expect(result).toBe(2);
     });
+
+    it('Should return 0 if the input is 0', () => {
+	    const result = compute(0);
+	    expect(result).toBe(0);
+    });
 });
