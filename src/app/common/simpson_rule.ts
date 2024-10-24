@@ -1,6 +1,7 @@
 // Simpson's Rule Integration with adaptive segmentation
+
 export function simpson(f: Function, x0: number, x1: number, num_seg: number, error: number): number {
-    let numSeg = num_seg;
+    let numSeg = num_seg || 100; // Aumentar el número de segmentos iniciales
     let w = (x1 - x0) / numSeg; // segment width
     let result = integrate(f, x0, x1, numSeg);
     let newResult;
@@ -14,6 +15,23 @@ export function simpson(f: Function, x0: number, x1: number, num_seg: number, er
 
     return newResult;
 }
+
+
+//export function simpson(f: Function, x0: number, x1: number, num_seg: number, error: number): number {
+  //  let numSeg = num_seg;
+    //let w = (x1 - x0) / numSeg; // segment width
+  //  let result = integrate(f, x0, x1, numSeg);
+    //let newResult;
+
+    //do {
+     //   numSeg *= 2; // Double the number of segments
+       // newResult = integrate(f, x0, x1, numSeg);
+    //    if (Math.abs(newResult - result) < error) break;
+      //  result = newResult;
+    //} while (true);
+
+    //return newResult;
+//}
 
 // Function to perform the actual integration using Simpson's rule
 function integrate(f: Function, x0: number, x1: number, numSeg: number): number {
@@ -30,22 +48,46 @@ function integrate(f: Function, x0: number, x1: number, numSeg: number): number 
 }
 
 // Helper function to calculate Gamma approximation for small values
+
 function gamma(n: number): number {
-    // Lanczos approximation for Gamma function
+    // Lanczos approximation for Gamma function with improved precision
+    const g = 7;
     const p = [
-        676.5203681218851, -1259.1392167224028, 771.32342877765313,
-        -176.61502916214059, 12.507343278686905, -0.13857109526572012,
-        9.9843695780195716e-6, 1.5056327351493116e-7
+        0.99999999999980993, 676.5203681218851, -1259.1392167224028,
+        771.32342877765313, -176.61502916214059, 12.507343278686905,
+        -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7
     ];
 
+    if (n < 0.5) {
+        return Math.PI / (Math.sin(Math.PI * n) * gamma(1 - n));
+    }
+
+    n -= 1;
     let x = p[0];
-    for (let i = 1; i < p.length; i++) {
+    for (let i = 1; i < g + 2; i++) {
         x += p[i] / (n + i);
     }
 
-    const t = n + p.length - 0.5;
-    return Math.sqrt(2 * Math.PI) * Math.pow(t, n - 0.5) * Math.exp(-t) * x;
+    const t = n + g + 0.5;
+    return Math.sqrt(2 * Math.PI) * Math.pow(t, n + 0.5) * Math.exp(-t) * x;
 }
+
+//function gamma(n: number): number {
+    // Lanczos approximation for Gamma function
+//    const p = [
+//        676.5203681218851, -1259.1392167224028, 771.32342877765313,
+  //      -176.61502916214059, 12.507343278686905, -0.13857109526572012,
+    //    9.9843695780195716e-6, 1.5056327351493116e-7
+    //];
+
+    //let x = p[0];
+    //for (let i = 1; i < p.length; i++) {
+      //  x += p[i] / (n + i);
+    //}
+
+    //const t = n + p.length - 0.5;
+    //return Math.sqrt(2 * Math.PI) * Math.pow(t, n - 0.5) * Math.exp(-t) * x;
+//}
 
 // Function for t-distribution
 export function tDistribution(x: number, dof: number): number {

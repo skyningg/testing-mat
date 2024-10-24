@@ -24,25 +24,25 @@ describe('Simpson\'s Rule Integration - f(x) = 1/x', () => {
 });
 
 describe('Simpson\'s Rule Integration - t-distribution, dof=9', () => {
-    it('should return approximately 0.4378 when integrating t-distribution with 9 dof from x=0 to x=1.1', () => {
-        const result = simpson(f4, 0, 1.1, 50, 0.00001);
-        expect(result).toBeCloseTo(0.4378, 4); // Ajustado
+    it('should return approximately 0.35006 when integrating t-distribution with 9 dof from x=0 to x=1.1', () => {
+        const result = simpson(f4, 0, 1.1, 9, 0.00001);
+        expect(result).toBeCloseTo(0.35006, 5); // Ajustado
     });
 });
 
 describe('Simpson\'s Rule Integration - t-distribution, dof=10', () => {
-    it('should return approximately 0.4476 when integrating t-distribution with 10 dof from x=0 to x=1.1812', () => {
-        const result = simpson(f5, 0, 1.1812, 50, 0.00001);
-        expect(result).toBeCloseTo(0.4476, 4); // Ajustado
+    it('should return approximately 0.36757 when integrating t-distribution with 10 dof from x=0 to x=1.1812', () => {
+        const result = simpson(f5, 0, 1.1812, 10, 0.00001);
+        expect(result).toBeCloseTo(0.36757, 5); // Ajustado
     });
 });
 
 describe('Simpson\'s Rule Integration - t-distribution, dof=30', () => {
-    it('should return approximately 0.5167 when integrating t-distribution with 30 dof from x=0 to x=2.75', () => {
-        const result = simpson(f6, 0, 2.75, 100, 0.00001);
-        expect(result).toBeCloseTo(0.5167, 4); // Ajustado
+    it('should return approximately 0.49500 when integrating t-distribution with 30 dof from x=0 to x=2.75', () => {
+        const result = simpson(f6, 0, 2.75, 30, 0.00001);
+        expect(result).toBeCloseTo(0.49500, 5); // Ajustado
     });
- });
+});
 
 //function zeroFunction(x: number): number {
   //  return 0; // Siempre devuelve 0
